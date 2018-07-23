@@ -2,6 +2,8 @@ FROM wdijkerman/openam:13.0.0
 
 USER 0:0
 
+ENV MAX_HEAP="1g"
+
 COPY data/run_me.sh /data/
 COPY data/configure.sh /data/
 RUN chmod 777 /data/run_me.sh
