@@ -4,6 +4,7 @@ USER 0:0
 
 ENV MAX_HEAP="1g"
 
+RUN rm -rf /openam
 COPY data/run_me.sh /data/
 COPY data/configure.sh /data/
 RUN chmod 777 /data/run_me.sh
