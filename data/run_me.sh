@@ -4,7 +4,7 @@ set -euo pipefail
 # Instance dir does not exist? Then we need to run setup
 if [ ! -f ${BASE_DIR}/install.log ] ; then
   echo "OpenAM config not found. Configuring.."
-  chown openam:openam -R $BASE_DIR
+  chown root:root -R $BASE_DIR
   /data/configure.sh &
 fi
 
