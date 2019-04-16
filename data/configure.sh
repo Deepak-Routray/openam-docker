@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-until curl -Is http://localhost:8080/openam/config/options.htm | head -n 1 | grep "200 OK" >/dev/null; do
+until curl -Is http://localhost:8080/openam/config/options.htm | head -n 1 | grep "200" >/dev/null; do
   echo "Waiting for complete startup OpenAM"
   sleep 5
 done
 
 #Configure OpenAM
-cd /home/openam/conf
+cd $CONFIG_DIR/ssoconfiguratortools
 cp /files/initial-config.properties .
 echo "server is started!! Running configurator tool"
-java -jar openam-configurator-tool-${OPENAM_VERSION}.jar --file initial-config.properties -DSERVER_URL=http://localhost:8080
+java -jar openam-configurator-tool-${VERSION}.jar --file initial-config.properties -DSERVER_URL=http://localhost:8080
 
 sleep 5
 #Create a default user (Not amadmin)
 if [ ! -z "$APP_USER" ] && [ ! -z "$APP_USER_PWD" ] ; then
-  cd /home/openam/admintools
+  cd $CONFIG_DIR/ssoadmintools
   # password file should be readonly for the owning user
   echo "${AM_PWD}" > mypass
   chmod 400 mypass
@@ -32,4 +32,4 @@ if [ ! -z "$APP_USER" ] && [ ! -z "$APP_USER_PWD" ] ; then
 	echo "create-identity done"
   fi
 fi
-cd /usr/local/tomcat
+cd $CATALINA_HOME
